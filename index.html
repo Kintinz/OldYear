@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox and Text Modification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1e2a47;
+            overflow: hidden;
+            color: white;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            gap: 20px;
+            margin: 10px 0;
+            padding-left: 40px;
+        }
+
+        p {
+            margin: 0;
+            text-align: center;
+        }
+
+        h3 {
+            color: #f39c12;
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .snowflake {
+            position: absolute;
+            font-size: 2em;
+            color: white;
+            user-select: none;
+            z-index: 100;
+            animation: snow 10s linear infinite;
+        }
+
+        @keyframes snow {
+            0% {
+                top: -10px;
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            padding: 10px;
+            border-radius: 10px;
+            justify-content: flex-start;
+        }
+
+        input[type="checkbox"] {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            background-color: #f39c12;
+            border: 2px solid #f39c12;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #e67e22;
+            border: 2px solid #e67e22;
+        }
+
+        input[type="checkbox"]:checked::before {
+            content: "✔";
+            color: white;
+            font-size: 20px;
+            display: block;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .button {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            margin-left: 100px;
+        }
+
+        .button:hover {
+            background-color: #e67e22;
+        }
+
+        #play-music {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            z-index: 999;
+            transition: background-color 0.3s;
+        }
+
+        #play-music:hover {
+            background-color: #e67e22;
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="background-music" muted loop>
+        <source src="NamQuaDaLamGiGalaNhacViet2021-NooPhuocThinh-6937919.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="play-music">bật</button>
+    <div class="container">
+        <h3>Tổng kết năm 2024</h3>
+        <div class="row">
+            <label class="checkbox-wrapper">
+                <input type="checkbox" class="wordCheckbox" id="checkbox1" data-target="text1">
+                <span id="text1" data-original="Tiết kiệm 2.000.000.000 đ">Tiết kiệm 2.000.000.000 đ</span>
+            </label>
+        </div>
+        <div class="row">
+            <label class="checkbox-wrapper">
+                <input type="checkbox" class="wordCheckbox" id="checkbox2" data-target="text2">
+                <span id="text2" data-original="Mua ô tô">Mua ô tô</span>
+            </label>
+        </div>
+        <div class="row">
+            <label class="checkbox-wrapper">
+                <input type="checkbox" class="wordCheckbox" id="checkbox3" data-target="text3">
+                <span id="text3" data-original="không còn độc thân">không còn độc thân</span>
+            </label>
+        </div>
+        <div class="row">
+            <label class="checkbox-wrapper">
+                <input type="checkbox" class="wordCheckbox" id="checkbox4" data-target="text4">
+                <span id="text4" data-original="Công việc ổn định">Công việc ổn định</span>
+            </label>
+        </div>
+        <div class="row">
+            <button class="button" onclick="window.location.href = 'happy_new_year.html'">Hoàn thành năm 2024</button>
+        </div>
+    </div>
+
+    <div id="snowflakes"></div>
+
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = `${Math.random() * window.innerWidth}px`;
+            snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+
+            document.getElementById('snowflakes').appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 10000);
+        }
+
+        setInterval(createSnowflake, 100);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const checkboxes = document.querySelectorAll(".wordCheckbox");
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener("change", () => {
+                    const targetId = checkbox.getAttribute("data-target");
+                    const targetElement = document.getElementById(targetId);
+                    const originalText = targetElement.getAttribute("data-original");
+
+                    if (checkbox.checked) {
+                        switch (targetId) {
+                            case "text1":
+                                targetElement.innerHTML = "Tiết kiệm 200.000 đ";
+                                break;
+                            case "text2":
+                                targetElement.innerHTML = "Mua ô tô mô hình";
+                                break;
+                            case "text3":
+                                targetElement.innerHTML = "Độc thân";
+                                break;
+                            case "text4":
+                                targetElement.innerHTML = "Công việc bất ổn";
+                                break;
+                        }
+                    } else {
+                        targetElement.innerHTML = originalText;
+                    }
+                });
+            });
+        });
+
+        window.addEventListener("beforeunload", () => {
+            const checkboxes = document.querySelectorAll(".wordCheckbox");
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                const targetId = checkbox.getAttribute("data-target");
+                const targetElement = document.getElementById(targetId);
+                targetElement.innerHTML = targetElement.getAttribute("data-original");
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const music = document.getElementById('background-music');
+            const playButton = document.getElementById('play-music');
+
+            // Thử phát nhạc với âm thanh bị tắt tiếng
+            music.play().then(() => {
+                console.log('Phát nhạc thành công.');
+                music.muted = false; // Bật âm thanh
+            }).catch(error => {
+                console.warn('Tự động phát nhạc bị chặn, cần người dùng tương tác:', error);
+
+                // Hiển thị nút cho người dùng bật nhạc
+                playButton.style.display = 'block';
+                playButton.addEventListener('click', () => {
+                    music.muted = false; // Bật âm thanh
+                    music.play().then(() => {
+                        console.log('Phát nhạc sau tương tác.');
+                        playButton.style.display = 'none'; // Ẩn nút sau khi nhạc được phát
+                    }).catch(err => {
+                        console.error('Không thể phát nhạc:', err);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
